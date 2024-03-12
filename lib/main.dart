@@ -1,12 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:newsapp/constant/constant.dart';
 import 'package:newsapp/pages/splash_screen.dart';
 
-import 'pages/home_pages/bloc/news_bloc.dart';
+import 'pages/home_pages/bloc/news_bloc/news_bloc.dart';
 import 'utils/size.dart';
 
-void main() {
+void main() async {
+  var path = Directory.current.path;
+  Hive.init(path);
   runApp(const MyApp());
 }
 

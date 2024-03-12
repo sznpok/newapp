@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newsapp/constant/constant.dart';
-import 'package:newsapp/pages/home_pages/bloc/news_bloc.dart';
+import 'package:newsapp/pages/home_pages/bloc/news_bloc/news_bloc.dart';
 import 'package:newsapp/utils/size.dart';
 import 'package:intl/intl.dart';
 
@@ -45,7 +45,7 @@ class _NewsScreenState extends State<NewsScreen> {
           } else if (state is SuccessNewsState) {
             return ListView.builder(
                 itemCount: state.newsModel.articles!.length,
-                padding: EdgeInsets.all(SizeConfig.padding! * 0.03),
+                padding: EdgeInsets.all(SizeConfig.padding! * 0.02),
                 shrinkWrap: false,
                 itemBuilder: (context, i) {
                   final news = state.newsModel.articles![i];
@@ -54,9 +54,13 @@ class _NewsScreenState extends State<NewsScreen> {
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const NewsDetailsScreen()));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NewsDetailsScreen(
+                            articles: state.newsModel.articles![i],
+                          ),
+                        ),
+                      );
                     },
                     child: Card(
                       child: Row(
@@ -64,7 +68,7 @@ class _NewsScreenState extends State<NewsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CachedNetworkImage(
-                            imageUrl: news.urlToImage!.toString(),
+                            imageUrl: news.urlToImage.toString(),
                             height: SizeConfig.screenHeight! * 0.1,
                             width: SizeConfig.screenWidth! * 0.3,
                             fit: BoxFit.cover,
