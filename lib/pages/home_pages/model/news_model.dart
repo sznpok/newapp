@@ -63,13 +63,13 @@ class Articles {
     if (source != null) {
       data['source'] = source!.toJson();
     }
-    data['author'] = author;
-    data['title'] = title;
-    data['description'] = description;
-    data['url'] = url;
+    data['author'] = author ?? "";
+    data['title'] = title ?? "";
+    data['description'] = description ?? "";
+    data['url'] = url ?? "";
     data['urlToImage'] = urlToImage;
-    data['publishedAt'] = publishedAt;
-    data['content'] = content;
+    data['publishedAt'] = publishedAt ?? "";
+    data['content'] = content ?? "";
     return data;
   }
 }

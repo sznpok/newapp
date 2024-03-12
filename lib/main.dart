@@ -22,7 +22,15 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: secondaryColor),
+          appBarTheme: AppBarTheme(
+            centerTitle: true,
+            foregroundColor: secondaryColor,
+            backgroundColor: primaryColor,
+            titleTextStyle:
+                Theme.of(context).textTheme.headlineMedium!.copyWith(
+                      color: secondaryColor,
+                    ),
+          ),
           primaryColor: primaryColor,
           textTheme: Theme.of(context).textTheme,
           useMaterial3: true,
