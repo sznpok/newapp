@@ -80,12 +80,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(
                     height: SizeConfig.screenHeight! * 0.02,
                   ),
-                  Text(
-                    categoriesModel[index].categories,
-                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                          color: secondaryColor,
-                          fontWeight: FontWeight.w600,
-                        ),
+                  Expanded(
+                    child: Text(
+                      categoriesModel[index].categories,
+                      textAlign: TextAlign.center,
+                      style:
+                          Theme.of(context).textTheme.headlineMedium!.copyWith(
+                                color: secondaryColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                    ),
                   ),
                 ],
               ),

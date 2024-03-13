@@ -6,10 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:meta/meta.dart';
-import 'package:newsapp/pages/home_pages/model/news_model.dart';
 import 'package:newsapp/pages/home_pages/repo/news_repo.dart';
-
-import '../../../../utils/database_helper.dart';
 import '../../model/new_model.dart';
 
 part 'news_event.dart';
@@ -28,10 +25,10 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
     emit(LoadingNewsInitial());
     final data = await newsRepo.fetchNewsData(event.categoryNews);
     final box = await Hive.openBox<NewsModel>('news');
-    const newsKey = "key-news";
+    //const newsKey = "key-news";
     if (data.status == "ok") {
-      await box.put(newsKey, data);
-      final boxData = box.get(newsKey, defaultValue: null);
+      await box.put("news", data);
+      final boxData = box.get("news", defaultValue: data);
       log(boxData!.toJson().toString());
       emit(SuccessNewsState(boxData));
     } else {
