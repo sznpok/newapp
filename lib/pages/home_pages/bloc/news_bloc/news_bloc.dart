@@ -18,22 +18,22 @@ part 'news_state.dart';
 
 class NewsBloc extends Bloc<NewsEvent, NewsState> {
   NewsBloc() : super(NewsInitial()) {
-    on<FetchNewsEvent>(newEvent);
+    on<FetchNewsEvent>(newsEvent);
   }
 
   NewsRepo newsRepo = NewsRepo();
 
-  FutureOr<void> newEvent(FetchNewsEvent event, Emitter<NewsState> emit) async {
+  FutureOr<void> newsEvent(
+      FetchNewsEvent event, Emitter<NewsState> emit) async {
     emit(LoadingNewsInitial());
     final data = await newsRepo.fetchNewsData(event.categoryNews);
     final box = await Hive.openBox<NewsModel>('news');
+    const newsKey = "key-news";
     if (data.status == "ok") {
-      final key = await box.add(data);
-      log("Hive data: $key ");
-
-      //box.get("news", defaultValue: data);
-
-      emit(SuccessNewsState(data));
+      await box.put(newsKey, data);
+      final boxData = box.get(newsKey, defaultValue: null);
+      log(boxData!.toJson().toString());
+      emit(SuccessNewsState(boxData));
     } else {
       emit(ErrorNewsState(data.runtimeType.toString()));
     }
