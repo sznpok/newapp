@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:newsapp/constant/constant.dart';
 import 'package:newsapp/utils/size.dart';
 
+import '../model/new_model.dart';
 import '../model/news_model.dart';
 
 class NewsDetailsScreen extends StatelessWidget {

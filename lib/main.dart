@@ -2,16 +2,25 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
 import 'package:newsapp/constant/constant.dart';
 import 'package:newsapp/pages/splash_screen.dart';
 
 import 'pages/home_pages/bloc/news_bloc/news_bloc.dart';
+import 'pages/home_pages/model/new_model.dart';
 import 'utils/size.dart';
+import 'package:path_provider/path_provider.dart' as pathProvider;
 
 void main() async {
-  var path = Directory.current.path;
-  Hive.init(path);
+  WidgetsFlutterBinding.ensureInitialized();
+  Directory directory = await pathProvider.getApplicationDocumentsDirectory();
+  Hive.init(directory.path);
+  await Hive.initFlutter();
+  Hive.registerAdapter(NewsModelAdapter());
+  Hive.registerAdapter(ArticlesAdapter());
+  Hive.registerAdapter(SourceAdapter());
+  Hive.openBox<NewsModel>("news");
   runApp(const MyApp());
 }
 

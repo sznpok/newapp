@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
-import 'package:newsapp/pages/home_pages/model/news_model.dart';
 import '../../../utils/request_type_exception.dart';
+import '../model/new_model.dart';
 
 class NewsRepo {
   Client client = Client();

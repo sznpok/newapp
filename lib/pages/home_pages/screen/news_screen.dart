@@ -21,6 +21,7 @@ class _NewsScreenState extends State<NewsScreen> {
   @override
   void initState() {
     context.read<NewsBloc>().add(FetchNewsEvent(widget.categories!));
+
     super.initState();
   }
 
