@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:hive/hive.dart';
 import 'package:http/http.dart';
 import '../../../utils/request_type_exception.dart';
 import '../model/new_model.dart';

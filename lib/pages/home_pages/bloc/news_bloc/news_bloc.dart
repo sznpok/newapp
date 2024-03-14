@@ -25,12 +25,11 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
     emit(LoadingNewsInitial());
     final data = await newsRepo.fetchNewsData(event.categoryNews);
     final box = await Hive.openBox<NewsModel>('news');
-    //const newsKey = "key-news";
+    const newsKey = "key-news";
     if (data.status == "ok") {
-      await box.put("news", data);
-      final boxData = box.get("news", defaultValue: data);
-      log(boxData!.toJson().toString());
-      emit(SuccessNewsState(boxData));
+      await box.put(newsKey, data);
+      final boxData = box.get(newsKey, defaultValue: null);
+      emit(SuccessNewsState(boxData!));
     } else {
       emit(ErrorNewsState(data.runtimeType.toString()));
     }
