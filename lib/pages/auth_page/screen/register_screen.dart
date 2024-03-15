@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:newsapp/pages/auth_page/screen/register_screen.dart';
+import 'package:newsapp/pages/auth_page/screen/login_screen.dart';
 
 import '../../../constant/constant.dart';
 import '../../../constant/images.dart';
@@ -12,14 +12,14 @@ import '../../../utils/size.dart';
 import '../../home_pages/screen/home_screen.dart';
 import '../services/firebase_auth_services.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final FirebaseAuthService _authService = FirebaseAuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login Setup'),
+        title: const Text('Register user'),
       ),
       body: Padding(
         padding: EdgeInsets.all(
@@ -47,11 +47,11 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Align(
+                alignment: Alignment.center,
                 child: Text(
-                  "Login Here",
+                  "Register Here",
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
-                alignment: Alignment.center,
               ),
               SizedBox(
                 height: SizeConfig.screenHeight! * 0.05,
@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const Text('Email'),
               TextFormField(
                 controller: _emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "email",
                   border: OutlineInputBorder(),
                 ),
@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: SizeConfig.screenHeight! * 0.02,
               ),
-              Text('Password'),
+              const Text('Password'),
               TextFormField(
                 controller: _passwordController,
                 decoration: const InputDecoration(
@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  _login();
+                  _register();
                 },
                 style: TextButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -97,44 +97,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 child: Text(
-                  'Login',
+                  'Register',
                   style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                 ),
               ),
-              SizedBox(
-                height: SizeConfig.screenHeight! * 0.05,
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'If not registered, please registered here ',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyLarge!,
-                ),
-              ),
-              SizedBox(
-                height: SizeConfig.screenHeight! * 0.01,
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const RegisterScreen()));
-                  },
-                  child: Text(
-                    'Sign up',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall!
-                        .copyWith(color: primaryColor),
-                  ),
-                ),
-              )
             ],
           ),
         ),
@@ -142,18 +110,16 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void _login() async {
-    //  String username = _userNameController.text;
+  void _register() async {
     String email = _emailController.text;
     String password = _passwordController.text;
-    User? user = await _authService.signUser(email, password);
-
+    User? user = await _authService.registerUser(email, password);
     if (user != null) {
-      log("user is successfully created");
+      log("user is successfullly created");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'Login successfully',
+            'User registered successfully',
             style: Theme.of(context)
                 .textTheme
                 .bodyLarge!
@@ -164,13 +130,14 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
+          MaterialPageRoute(builder: (context) => LoginScreen()),
           (route) => false);
     } else {
+      log("not registered");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'Please check your email and password!!!',
+            'User already registered',
             style: Theme.of(context)
                 .textTheme
                 .bodyLarge!
@@ -179,7 +146,6 @@ class _LoginScreenState extends State<LoginScreen> {
           backgroundColor: Colors.red,
         ),
       );
-      log("not login");
     }
   }
 }
