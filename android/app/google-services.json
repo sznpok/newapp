@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "670438043373",
+    "project_id": "newsapp-9e912",
+    "storage_bucket": "newsapp-9e912.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:670438043373:android:120daa8163870ce8e666e4",
+        "android_client_info": {
+          "package_name": "com.chimpvine.app.newsapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8da-cQe0_YgPIcA6EEGexhISU-0tb1fA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
