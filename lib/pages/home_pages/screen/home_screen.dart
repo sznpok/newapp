@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       categoriesModel[index].categories,
                       textAlign: TextAlign.center,
                       style:
-                          Theme.of(context).textTheme.headlineMedium!.copyWith(
+                          Theme.of(context).textTheme.headlineSmall!.copyWith(
                                 color: secondaryColor,
                                 fontWeight: FontWeight.w600,
                               ),
