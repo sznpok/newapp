@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:newsapp/constant/images.dart';
 import 'package:newsapp/utils/size.dart';
 
+import 'auth_page/screen/login_screen.dart';
 import 'home_pages/screen/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -20,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          context, MaterialPageRoute(builder: (context) => LoginScreen()));
     });
   }
 
