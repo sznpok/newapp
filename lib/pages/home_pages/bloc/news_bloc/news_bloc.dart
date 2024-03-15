@@ -23,15 +23,22 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
   FutureOr<void> newsEvent(
       FetchNewsEvent event, Emitter<NewsState> emit) async {
     emit(LoadingNewsInitial());
-    final data = await newsRepo.fetchNewsData(event.categoryNews);
-    final box = await Hive.openBox<NewsModel>('news');
     const newsKey = "key-news";
-    if (data.status == "ok") {
-      await box.put(newsKey, data);
-      final boxData = box.get(newsKey, defaultValue: null);
+    final box = await Hive.openBox<NewsModel>('news');
+    try {
+      final data = await newsRepo.fetchNewsData(event.categoryNews);
+      if (data.status == "ok") {
+        await box.put(newsKey, data);
+        emit(SuccessNewsState(data));
+      } else {
+        emit(ErrorNewsState(data.runtimeType.toString()));
+      }
+    } catch (e) {
+      NewsModel? boxData = box.get(newsKey, defaultValue: null);
+      //log(boxData!.toJson().toString());
       emit(SuccessNewsState(boxData!));
-    } else {
-      emit(ErrorNewsState(data.runtimeType.toString()));
+    } finally {
+      log("message");
     }
   }
 }
