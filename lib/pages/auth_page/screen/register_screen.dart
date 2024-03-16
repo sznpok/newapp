@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newsapp/pages/auth_page/bloc/register_bloc/user_register_bloc.dart';
@@ -139,6 +140,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: SizeConfig.screenHeight! * 0.02,
+                ),
+                GestureDetector(
+                  child: Text(
+                    'Login',
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          color: primaryColor,
+                        ),
+                  ),
+                  onTap: () {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginScreen()),
+                        (route) => false);
+                  },
                 ),
               ],
             ),
