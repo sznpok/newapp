@@ -6,8 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:newsapp/constant/constant.dart';
+import 'package:newsapp/pages/auth_page/bloc/register_bloc/user_register_bloc.dart';
 import 'package:newsapp/pages/splash_screen.dart';
 
+import 'pages/auth_page/bloc/login_bloc/user_login_bloc.dart';
 import 'pages/home_pages/bloc/news_bloc/news_bloc.dart';
 import 'pages/home_pages/model/new_model.dart';
 import 'utils/size.dart';
@@ -32,8 +34,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return BlocProvider(
-      create: (context) => NewsBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => NewsBloc(),
+        ),
+        BlocProvider(
+          create: (context) => UserLoginBloc(),
+        ),
+        BlocProvider(create: (context) => UserRegisterBloc()),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,

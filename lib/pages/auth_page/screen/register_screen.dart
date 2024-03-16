@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newsapp/pages/auth_page/bloc/register_bloc/user_register_bloc.dart';
 import 'package:newsapp/pages/auth_page/screen/login_screen.dart';
 
 import '../../../constant/constant.dart';
@@ -81,26 +83,66 @@ class _RegisterScreenState extends State<RegisterScreen> {
               SizedBox(
                 height: SizeConfig.screenHeight! * 0.02,
               ),
-              TextButton(
-                onPressed: () {
-                  _register();
-                },
-                style: TextButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  foregroundColor: secondaryColor,
-                  backgroundColor: primaryColor,
-                  fixedSize: Size(
-                    SizeConfig.screenWidth!,
-                    SizeConfig.screenHeight! * 0.08,
-                  ),
-                ),
-                child: Text(
-                  'Register',
-                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                        fontWeight: FontWeight.bold,
+              BlocListener<UserRegisterBloc, UserRegisterState>(
+                listener: (context, state) {
+                  if (state is LoadingUserRegisterState) {
+                    Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is ErrorUserRegisterState) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          "Already registered please go back and login",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(color: Colors.white),
+                        ),
+                        backgroundColor: Colors.red,
                       ),
+                    );
+                  } else if (state is SuccessUserRegisterState) {
+                    SnackBar(
+                      content: Text(
+                        "Successfully registered",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .copyWith(color: Colors.white),
+                      ),
+                      backgroundColor: Colors.red,
+                    );
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginScreen()),
+                        (route) => false);
+                  }
+                },
+                child: TextButton(
+                  onPressed: () {
+                    context.read<UserRegisterBloc>().add(RegisterEvent(
+                        email: _emailController.text,
+                        password: _passwordController.text));
+                  },
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    foregroundColor: secondaryColor,
+                    backgroundColor: primaryColor,
+                    fixedSize: Size(
+                      SizeConfig.screenWidth!,
+                      SizeConfig.screenHeight! * 0.08,
+                    ),
+                  ),
+                  child: Text(
+                    'Register',
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
                 ),
               ),
             ],
