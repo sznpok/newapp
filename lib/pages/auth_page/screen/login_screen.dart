@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newsapp/pages/auth_page/bloc/user_kyc_bloc/user_kyc_bloc.dart';
+import 'package:newsapp/pages/auth_page/screen/user_kyc_screen.dart';
 import '/pages/auth_page/bloc/login_bloc/user_login_bloc.dart';
 import '/pages/auth_page/screen/register_screen.dart';
 import '../../../constant/constant.dart';
@@ -151,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const RegisterScreen()));
+                            builder: (context) => const UserKycScreen()));
                   },
                   child: Text(
                     'Sign up',

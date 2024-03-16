@@ -10,6 +10,7 @@ import 'package:newsapp/pages/auth_page/bloc/register_bloc/user_register_bloc.da
 import 'package:newsapp/pages/splash_screen.dart';
 
 import 'pages/auth_page/bloc/login_bloc/user_login_bloc.dart';
+import 'pages/auth_page/bloc/user_kyc_bloc/user_kyc_bloc.dart';
 import 'pages/home_pages/bloc/news_bloc/news_bloc.dart';
 import 'pages/home_pages/model/new_model.dart';
 import 'utils/size.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
           create: (context) => UserLoginBloc(),
         ),
         BlocProvider(create: (context) => UserRegisterBloc()),
+        BlocProvider(create: (context) => UserKycBloc()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

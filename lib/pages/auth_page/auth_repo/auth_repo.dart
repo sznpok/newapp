@@ -1,9 +1,11 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class AuthRepo {
   FirebaseAuth auth = FirebaseAuth.instance;
+  DatabaseReference? dbRef;
 
   Future<User?> registerUser(String email, String password) async {
     try {
@@ -27,5 +29,18 @@ class AuthRepo {
       log("Error while login");
     }
     return null;
+  }
+
+  kycSetup(String name, String fatherName, String motherName, int age,
+      int citizenNumber) async {
+    dbRef = FirebaseDatabase.instance.ref().child("Person");
+    Map<String, dynamic> people = {
+      "name": name,
+      "fatherName": fatherName,
+      "motherName": motherName,
+      "age": age,
+      "citizenshipNo": citizenNumber
+    };
+    await dbRef!.push().set(people);
   }
 }
