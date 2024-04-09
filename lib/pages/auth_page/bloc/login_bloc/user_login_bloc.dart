@@ -18,6 +18,7 @@ class UserLoginBloc extends Bloc<UserLoginEvent, UserLoginState> {
 
   FutureOr<void> userLoginEvent(
       LoginEvent event, Emitter<UserLoginState> emit) async {
+    emit(LoadingUserLoginState());
     final response = await authRepo.loginUser(event.email, event.password);
     if (response != null) {
       emit(SuccessUserLoginState());
