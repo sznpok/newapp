@@ -22,8 +22,9 @@ class AuthRepo {
     try {
       UserCredential credential = await auth.signInWithEmailAndPassword(
           email: email, password: password);
-      log("success");
-      log(credential.user.toString());
+      log("Login success");
+      final String? token = await credential.user!.getIdToken();
+      log("User token $token");
       return credential.user;
     } catch (e) {
       log("Error while login");
